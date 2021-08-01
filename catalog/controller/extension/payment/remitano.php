@@ -2,13 +2,16 @@
 class ControllerExtensionPaymentRemitano extends Controller {
 	public function index() {
 		$this->load->language('extension/payment/remitano');
+		$this->load->model('extension/payment/remitano');
 		$data['text_testmode'] = $this->language->get('text_testmode');
+		$data['text_does_not_support_currency'] = $this->language->get('text_does_not_support_currency');
 		$data['button_confirm'] = $this->language->get('button_confirm');
 		$data['testmode'] = $this->config->get('payment_remitano_test');
-
+		$order_id = $this->session->data['order_id'];
+		$order_info = $this->model_checkout_order->getOrder($order_id);
+		$currency_code = $order_info['currency_code'];
+		$data['current_currency_is_supported'] = $this->model_extension_payment_remitano->isCurrencySupported($currency_code);
 		$this->load->model('checkout/order');
-
-		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		$data['action'] = $this->url->link('extension/payment/remitano/checkout', '', true);
 
@@ -28,16 +31,26 @@ class ControllerExtensionPaymentRemitano extends Controller {
 
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 
-		$body  = json_encode( array(
-			'coin_currency' => 'usdt',
-			'coin_amount' => $order_info['total'],
+		$currency_code = $order_info['currency_code'];
+
+		$submission_data = array(
 			'cancelled_or_completed_callback_url' => $this->url->link('extension/payment/remitano/callback', '', true),
 			'cancelled_or_completed_redirect_url' => $this->url->link('extension/payment/remitano/callback', '', true),
 			'payload' => array(
 				'order_id' => $order_id
 			),
-			'description' => "Order #$order_id from {$_SERVER['SERVER_NAME']}",
-		) );
+			'description' => "Order #$order_id from {$_SERVER['SERVER_NAME']}"
+		);
+
+		if ($currency_code == 'USDT') {
+			$submission_data['coin_currency'] = 'usdt';
+			$submission_data['coin_amount'] = $order_info['total'];
+		} else {
+			$submission_data['fiat_currency'] = $currency_code;
+			$submission_data['fiat_amount'] = $order_info['total'];
+		}
+
+		$body = json_encode($submission_data, true);
 
 		$result = $this->model_extension_payment_remitano->requestCreateMerchantCharge($body);
 
