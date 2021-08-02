@@ -1,6 +1,10 @@
+{% if current_currency_is_supported == false %}
+<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ text_does_not_support_currency }}</div>
+{% endif %}
 {% if testmode %}
 <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ text_testmode }}</div>
 {% endif %}
+{% if current_currency_is_supported %}
 <form action="{{ action }}" method="post">
   <div class="buttons">
     <div class="pull-right">
@@ -8,3 +12,4 @@
     </div>
   </div>
 </form>
+{% endif %}

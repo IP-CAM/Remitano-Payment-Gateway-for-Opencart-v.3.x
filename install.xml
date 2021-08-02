@@ -2,14 +2,7 @@
 <modification>
     <code>Remitano Payment Gateway</code>
     <name>Remitano Payment Gateway</name>
-    <version>1.0</version>
+    <version>1.1</version>
     <author>remitanoofficial</author>
     <link>http://www.opencart.com</link>
-    <file path="catalog/controller/extension/payment/remitano.php">
-        <operation>
-            <search><![CDATA[
-            $data['column_left'] = $this->load->controller('common/column_left');
-            ]]></search>
-        </operation>
-    </file>
 </modification>

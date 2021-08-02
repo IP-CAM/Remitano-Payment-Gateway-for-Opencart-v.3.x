@@ -66,6 +66,16 @@ class ModelExtensionPaymentRemitano extends Model {
 		);
 	}
 
+	public function isCurrencySupported($currency_code) {
+		$supported_currencies = array("AED", "ARS", "AUD", "BND", "BOB", "BRL", "BYN", "CAD", "CDF", "CFA",
+						"CHF", "CNY", "COP", "DKK", "DZD", "EUR", "GBP", "GHS", "HKD", "IDR", "ILS", "INR", "JPY",
+						"KES", "KRW", "LAK", "MMK", "MXN", "MYR", "NAD", "NGN", "NOK", "NPR", "NZD", "OMR", "PEN",
+						"PHP", "PKR", "PLN", "QAR", "RUB", "RWF", "SEK", "SGD", "THB", "TRY", "TWD", "TZS", "UAH",
+						"UGX", "USD", "VES", "VND", "XAF", "ZAR", "ZMW", "USDT");
+
+		return in_array($currency_code, $supported_currencies);
+	}
+
 	private function buildUrl($target) {
 		if (!$this->config->get('payment_remitano_test')) {
 			$apiUrl = 'https://api.remitano.com';
