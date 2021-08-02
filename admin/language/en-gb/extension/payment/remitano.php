@@ -9,6 +9,7 @@ $_['text_edit'] = 'Edit Remitano Payment Gateway information';
 $_['text_remitano'] = '<a target="_BLANK" href="https://remitano.com/payment_gateway"><img src="view/image/payment/remitano.png" alt="Remitano Payment Gateway" title="Remitano Payment Gateway" style="border: 1px solid #EEEEEE;width:94px;height:25px" /></a>';
 $_['text_authorization'] = 'Authorization';
 $_['text_sale'] = 'Sale';
+$_['text_does_not_have_supported_currency'] = 'Your opencart website does not have any currency supported by Remitano Payment Gateway!';
 
 // Entry
 $_['entry_key'] = 'Key';

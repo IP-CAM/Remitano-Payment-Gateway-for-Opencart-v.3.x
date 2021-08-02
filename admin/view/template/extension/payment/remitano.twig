@@ -19,6 +19,9 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     {% endif %}
+    {% if has_supported_currency == false %}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ text_does_not_have_supported_currency }}</div>
+    {% endif %}
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
