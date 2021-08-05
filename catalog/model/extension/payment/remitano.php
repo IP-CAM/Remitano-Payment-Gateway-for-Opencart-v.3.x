@@ -32,12 +32,17 @@ class ModelExtensionPaymentRemitano extends Model {
 
 		if ($http_code != 201) {
 			$success = false;
+			$response = array(
+				$http_code => $response
+			);
+		} else {
+			$response = json_decode($response, true);
 		}
 		curl_close($curl);
 
 		return array(
 			'sucess' => $success,
-			'response' => json_decode($response, true)
+			'response' => $response
 		);
 	}
 

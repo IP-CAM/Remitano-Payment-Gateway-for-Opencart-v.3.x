@@ -47,7 +47,7 @@ class ControllerExtensionPaymentRemitano extends Controller {
 			$submission_data['coin_amount'] = $order_info['total'];
 		} else {
 			$submission_data['fiat_currency'] = $currency_code;
-			$submission_data['fiat_amount'] = $order_info['total'];
+			$submission_data['fiat_amount'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
 		}
 
 		$body = json_encode($submission_data, true);
@@ -57,7 +57,7 @@ class ControllerExtensionPaymentRemitano extends Controller {
 		if ($result['sucess']) {
 			$this->response->redirect($result['response']['remitano_payment_url']);
 		} else {
-			print_r($result['response']);
+			print_r($result);
 		}
 	}
 
