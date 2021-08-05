@@ -96,6 +96,10 @@ class ControllerExtensionPaymentRemitano extends Controller {
 			$data['payment_remitano_sort_order'] = $this->config->get('payment_remitano_sort_order');
 		}
 
+		$this->load->model('extension/payment/remitano');
+		$data['has_supported_currency'] = $this->model_extension_payment_remitano->hasSupportedCurrency();
+		$data['text_does_not_have_supported_currency'] = $this->language->get('text_does_not_have_supported_currency');
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
